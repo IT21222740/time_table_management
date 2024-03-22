@@ -7,8 +7,13 @@ const {
   deleteCourese,
   getCourse,
 } = require("../controllers/courseController");
+const authorizeRole = require("../middleware/authorization");
+const validateToken = require("../middleware/validateToken");
 
-router.route("/").get(getCourses).post(publishCourse);
+router
+  .route("/")
+  .get(validateToken, getCourses)
+  .post(validateToken, authorizeRole("admin"), publishCourse);
 
 router.route("/:id").get(getCourse).put(updateCourse).delete(deleteCourese);
 

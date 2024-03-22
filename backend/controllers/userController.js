@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken");
 //@route Post /api/users/register
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
-  if (!username || !email || !password) {
+  const { username, email, password, role } = req.body;
+  if (!username || !email || !password || !role) {
     res.status(400);
     throw new Error("All fields are mandotary");
   }
@@ -24,6 +24,7 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     email,
     password: hashPassword,
+    role,
   });
   if (user) {
     res.status(201).json({ _id: user._id, email: user.email });
@@ -52,10 +53,11 @@ const loginUser = asyncHandler(async (req, res) => {
           username: user.username,
           email: user.email,
           id: user._id,
+          role: user.role,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1m" }
+      { expiresIn: "30m" }
     );
     res.status(200).json({ accessToken });
   } else {
