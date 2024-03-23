@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const {
   getCourses,
   publishCourse,
@@ -10,11 +9,16 @@ const {
 const authorizeRole = require("../middleware/authorization");
 const validateToken = require("../middleware/validateToken");
 
-router
-  .route("/")
-  .get(validateToken, getCourses)
-  .post(validateToken, authorizeRole("admin"), publishCourse);
+const router = express.Router();
 
-router.route("/:id").get(getCourse).put(updateCourse).delete(deleteCourese);
+router.use(validateToken);
+
+router.route("/").get(getCourses).post(authorizeRole("admin"), publishCourse);
+
+router
+  .route("/:id")
+  .get(getCourse)
+  .put(authorizeRole("admin"), updateCourse)
+  .delete(authorizeRole("admin"), deleteCourese);
 
 module.exports = router;
