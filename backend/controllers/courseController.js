@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Course = require("../models/courseModel");
 const User = require("../models/userModel");
+const Faculty = require("../models/faculty");
 //@desc Get all course
 //@route GET /api/courses
 //@access private
@@ -31,8 +32,8 @@ const publishCourse = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("All fiels are mandatory");
   }
-
-  const faculty = await User.findOne({ username: facultyUserName });
+  console.log(facultyUserName);
+  const faculty = await Faculty.findOne({ facultyname: facultyUserName });
   console.log(faculty);
   if (!faculty) {
     res.status(400);

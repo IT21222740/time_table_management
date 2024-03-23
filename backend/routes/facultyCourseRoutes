@@ -2,9 +2,14 @@ const express = require("express");
 
 const authorizeRole = require("../middleware/authorization");
 const validateToken = require("../middleware/validateToken");
-const { getFacultyCourses } = require("../controllers/facultyCourseController");
+const {
+  getFacultyCourses,
+  postFaculty,
+} = require("../controllers/facultyCourseController");
 const router = express.Router();
 
-router.get("/:id", validateToken, authorizeRole("admin"), getFacultyCourses);
+router.use(validateToken);
+router.get("/:id", authorizeRole("admin"), getFacultyCourses);
+router.post("/", authorizeRole("admin"), postFaculty);
 
 module.exports = router;

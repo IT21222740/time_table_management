@@ -5,7 +5,7 @@ const courseSchema = mongoose.Schema(
     faculty_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: [true, "Please add the Faculty Id"],
-      ref: "User",
+      ref: "Faculty",
     },
     name: {
       type: String,
