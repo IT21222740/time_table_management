@@ -14,6 +14,7 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/faculty", require("./routes/facultyCourseRoutes"));
 app.use("/api/resources", require("./routes/resourceRoute"));
 app.use("/api/class-session", require("./routes/classSessionRoute"));
+app.use("/api/student", require("./routes/studentRoute"));
 app.use(errorHandler);
 
 app.listen(port, () => {
