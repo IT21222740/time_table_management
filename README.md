@@ -68,11 +68,21 @@ npm test
 
 This project serves as a backend system for managing university timetables. It provides endpoints for CRUD operations on courses, users, class sessions, and resources. Additionally, it handles user authentication to ensure secure access to the system.
 
-# Technologies Used
 
-- Node.js
-- Express.js
-- MongoDB
-- JSON Web Tokens (JWT) for authentication
-- Mongoose for MongoDB object modeling
+
+## Tech Stack & libraries
+
+
+**Server:** Node, Express
+
+**Authentication:** JSON Web Token (JWT)
+
+**Password encryption:** bcrypt
+
+**XSS protection:** express-validator
+
+**Logging:** Winston
+
+**Testing:** Jest
+
 
