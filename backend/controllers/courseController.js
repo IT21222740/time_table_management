@@ -16,8 +16,7 @@ const getCourses = asyncHandler(async (req, res) => {
 const getCourse = asyncHandler(async (req, res) => {
   const course = await Course.findOne({ code: req.params.id });
   if (!course) {
-    res.status(404);
-    throw new Error("Contact not Found");
+    res.status(404).json({ message: "Course not found" });
   }
   res.status(200).json(course);
 });
@@ -62,8 +61,7 @@ const publishCourse = asyncHandler(async (req, res) => {
 const updateCourse = asyncHandler(async (req, res) => {
   const course = await Course.findOne({ code: req.params.id });
   if (!course) {
-    res.status(404);
-    throw new Error("Contact not found");
+    res.status(404).json({ message: "Course not found" });
   }
   const updateCourse = await Course.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -77,8 +75,7 @@ const updateCourse = asyncHandler(async (req, res) => {
 const deleteCourese = asyncHandler(async (req, res) => {
   const course = await Course.findOne({ code: req.params.id });
   if (!course) {
-    res.status(404);
-    throw new Error("Contact not found");
+    res.status(404).json({ error: "User already registered!" });
   }
   await Course.findByIdAndDelete(req.params.id);
   res.status(200).json(course);

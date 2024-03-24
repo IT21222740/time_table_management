@@ -10,12 +10,10 @@ const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password, role } = req.body;
   if (!username || !email || !password || !role) {
     res.status(400);
-    throw new Error("All fields are mandotary");
   }
   const userAvailable = await User.findOne({ email: email });
   if (userAvailable) {
-    res.status(400);
-    throw new Error("User already registered!");
+    return res.status(400).json({ error: "User already registered!" });
   }
   //HashPassword
   const hashPassword = await bcrypt.hash(password, 10);
@@ -29,8 +27,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({ _id: user._id, email: user.email });
   } else {
-    res.status(400);
-    throw new Error("User data is not valid");
+    res.status(400).json("Invalid user data");
   }
 });
 
@@ -40,8 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    res.status(400);
-    throw new Error("All fields are mandatory");
+    res.status(400).json({ error: "All fields are mandatory" });
   }
 
   const user = await User.findOne({ email: email });
@@ -61,8 +57,7 @@ const loginUser = asyncHandler(async (req, res) => {
     );
     res.status(200).json({ accessToken });
   } else {
-    res.status(401);
-    throw new Error("Email or password is not valid");
+    res.status(401).json({ error: "Invalid email or password" });
   }
 });
 

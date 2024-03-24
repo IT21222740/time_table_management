@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 router.use(validateToken);
-router.get("/:id", authorizeRole("admin"), getFacultyCourses);
+router.get("/:id", authorizeRole("admin", "faculty"), getFacultyCourses);
 router.post("/", authorizeRole("admin"), postFaculty);
 
 module.exports = router;
