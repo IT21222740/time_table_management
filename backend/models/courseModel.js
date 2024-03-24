@@ -20,6 +20,10 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add the course credits"],
     },
+    description: {
+      type: String,
+      required: [true, "Please add the Description"],
+    },
   },
   {
     timestamps: true,

@@ -27,13 +27,19 @@ const getCourse = asyncHandler(async (req, res) => {
 //@access private
 const publishCourse = asyncHandler(async (req, res) => {
   console.log("The request body", req.body);
-  const { name, code, credits, facultyUserName } = req.body;
-  if (!name || !code || !credits || !facultyUserName) {
+  const { name, code, credits, facultyUserName, description } = req.body;
+  if (!name || !code || !credits || !facultyUserName || !description) {
     res.status(400);
     throw new Error("All fiels are mandatory");
   }
   console.log(facultyUserName);
   const faculty = await Faculty.findOne({ facultyname: facultyUserName });
+  const courseCheck = await Course.findOne({ code: code });
+
+  if (courseCheck) {
+    res.status(400);
+    throw new Error("Courses Code is already in the database");
+  }
   console.log(faculty);
   if (!faculty) {
     res.status(400);
@@ -44,6 +50,7 @@ const publishCourse = asyncHandler(async (req, res) => {
     name,
     code,
     credits,
+    description,
   });
 
   res.status(201).json(course);

@@ -12,6 +12,8 @@ app.use(express.json());
 app.use("/api/courses", require("./routes/courseRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/faculty", require("./routes/facultyCourseRoutes"));
+app.use("/api/resources", require("./routes/resourceRoute"));
+app.use("/api/class-session", require("./routes/classSessionRoute"));
 app.use(errorHandler);
 
 app.listen(port, () => {
