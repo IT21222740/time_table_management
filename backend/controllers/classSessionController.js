@@ -5,7 +5,9 @@ const Course = require("../models/courseModel");
 const ClassSession = require("../models/classSession");
 const calculateSlotsDuringTime = require("../util/SlotsNumber");
 const ResourceAvbt = require("../models/locationAvailabiltyModel");
-
+//@desc Post a Timetable for student
+//@route post /api/class-session/
+//@access private
 const postClassSession = asyncHandler(async (req, res) => {
   const { batch, facultyName, courseCode, location, day, startTime, endTime } =
     req.body;
@@ -98,7 +100,9 @@ const postClassSession = asyncHandler(async (req, res) => {
     throw new Error("User data is not valid");
   }
 });
-
+//@desc post a Timetable for student
+//@route post /api/class-session/check
+//@access private
 const checkAvailabilty = asyncHandler(async (req, res) => {
   const { code, day, startTime, endTime } = req.body;
   console.log(req.body);
