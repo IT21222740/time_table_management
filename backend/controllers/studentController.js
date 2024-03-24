@@ -3,6 +3,7 @@ const Student = require("../models/studentModal");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const Course = require("../models/courseModel");
+const ClassSession = require("../models/classSession");
 //@desc Register a user
 //@route Post /api/stunent/register
 //@access private
@@ -70,4 +71,30 @@ const enrollCourses = asyncHandler(async (req, res) => {
   await student.save();
   res.status(200).json({ message: "Course Enrolled" });
 });
-module.exports = { registerStudent, enrollCourses };
+
+const viewTimeTable = asyncHandler(async (req, res) => {
+  console.log("View Time Table");
+  const { email } = req.body;
+  if (!email) {
+    res.status(400).json({ error: "Email is required" });
+  }
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    res.status(400).json({ error: "User not found" });
+  }
+  const student = await Student.findOne({ userId: user._id });
+  if (!student) {
+    res.status(400).json({ error: "Student not found" });
+  }
+  const courses = student.courses;
+  const classSessions = [];
+  console.log(courses);
+  for (let i = 0; i < courses.length; i++) {
+    console.log(courses[i]._id);
+    const sessions = await ClassSession.find({ course: courses[i]._id });
+    console.log(sessions);
+    classSessions.push(sessions);
+  }
+  res.status(200).json({ classSessions });
+});
+module.exports = { registerStudent, enrollCourses, viewTimeTable };
